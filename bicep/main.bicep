@@ -1,10 +1,12 @@
 @description('Specifies the location for resources.')
 param location string = 'westus3'
+param storageAccountName string = 'toylaunch${uniqueString(resourceGroup().id)}'
+param appServiceAppName string = 'toylaunch${uniqueString(resourceGroup().id)}'
 
-param appServiceAppName string = 'toy-product-launch-1-al'
+var appServicePlanName = 'toy-product-launch-plan'
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2021-08-01' = {
-  name: 'toylaunchstorageal'
+  name: storageAccountName
   location: location
   sku: {
     name: 'Standard_LRS'
@@ -16,7 +18,7 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-08-01' = {
 }
 
 resource appServicePlan 'Microsoft.Web/serverfarms@2021-03-01' = {
-  name: 'toy-product-launch-plan-starter'
+  name: appServicePlanName
   location: location
   sku: {
     name: 'F1'
